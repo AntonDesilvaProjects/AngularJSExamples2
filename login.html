@@ -1,0 +1,19 @@
+<div ng-controller="LoginController">
+<table cellpadding="50">
+	<tr>
+		<td>Username</td>
+		<td><input type="text" ng-model="txtUsername"></td>
+	</tr>
+	<tr>
+		<td>Password</td>
+		<td><input type="text" ng-model="txtPassword"></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><button ng-click="validateUser()" >Login</button></td>
+	</tr>
+</table>
+
+<font color="red">{{message}}</font>
+
+</div>

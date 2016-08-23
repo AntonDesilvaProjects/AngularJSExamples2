@@ -1,0 +1,20 @@
+<div ng-controller="WelcomeController">
+<h1>Welcome!</h1>
+{{data}}
+
+<table >
+	<tr>
+		<th>Title</th>
+		<th>Date</th>
+		<th>Tags</th>
+		<th>FileSize</th>
+	</tr>
+	<tr ng-repeat = "item in items">
+		<td>{{item.title}}</td>
+		<td>{{item.filesize}}</td>
+		<td>{{item.tags}}</td>
+		<td>{{item.date}}</td>
+	</tr>
+</table>
+
+</div>
