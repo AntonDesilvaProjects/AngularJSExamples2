@@ -1,10 +1,22 @@
-<select id="getStuff" resultMap="kyc">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "abc.UserMapper">
+	
+	
+	
+	<select id="getStuff" resultMap="kyc">
 		SELECT * FROM test_tasks;
 	</select>
-	<resultMap id="kyc" type="Runbook">
+	<resultMap id="kyc" type="abc.Runbook">
 		<result property = "id" column = "task_id"/>
-		<collection property="tasks" ofType="Task">
+		<collection property="tasks" ofType="abc.Task">
 			<result property = "attribute" column = "attribute"/>
 			<result property = "activity" column = "activity"/>
 		</collection>
 	</resultMap>
+	
+	
+	
+</mapper>
