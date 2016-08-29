@@ -1,0 +1,221 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class Builder {
+	public static void main(String[] args) throws FileNotFoundException, IOException
+	{
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		XSSFSheet sheet = workbook.createSheet();
+		
+		List<XSSFRow> rows = new ArrayList<XSSFRow>();
+		
+		//Create the default 10 x 10 rows that will be in every sheet
+		XSSFRow currentRow;
+		XSSFCell currentCell;
+		for(int i = 0; i < 10; i ++)
+		{
+			sheet.createRow(i);
+			for(int k = 0; k < 10; k++)
+			{
+				currentCell = sheet.getRow(i).createCell(k);
+				//currentCell.setCellValue((i+1) * (k+1));
+			}
+		}
+		
+		/*
+		 * 
+		 * The Blue Formatted Runbook Description
+		 * 
+		*/
+		XSSFRow[] rows2_8 = new XSSFRow[7];
+		rows2_8[0] = sheet.getRow(1);
+		rows2_8[1] = sheet.getRow(2);
+		rows2_8[2] = sheet.getRow(3);
+		rows2_8[3] = sheet.getRow(4);
+		rows2_8[4] = sheet.getRow(5);
+		rows2_8[5] = sheet.getRow(6);
+		rows2_8[6] = sheet.getRow(7);
+		
+		//Create color
+		XSSFCellStyle blueDescStyle = workbook.createCellStyle();
+		blueDescStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(100,149,237)));
+		blueDescStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		
+		rows2_8[0].getCell(3).setCellValue("This is the Runbook description");
+		rows2_8[0].getCell(3).setCellStyle(blueDescStyle);
+		rows2_8[1].getCell(3).setCellStyle(blueDescStyle);
+		rows2_8[2].getCell(3).setCellStyle(blueDescStyle);
+		rows2_8[3].getCell(3).setCellStyle(blueDescStyle);
+		rows2_8[4].getCell(3).setCellStyle(blueDescStyle);
+		rows2_8[5].getCell(3).setCellStyle(blueDescStyle);
+		rows2_8[6].getCell(3).setCellStyle(blueDescStyle);
+		 
+		
+		/*
+		 * 
+		 * Dark Blue Summary 
+		 * 
+		 */
+		XSSFCellStyle darkBlueSummary = workbook.createCellStyle();
+		darkBlueSummary.setFillForegroundColor(new XSSFColor(new java.awt.Color(25,25,112)));
+		darkBlueSummary.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		//First row
+		sheet.getRow(0).getCell(5).setCellValue("Total Tasks to Report:");
+		sheet.getRow(0).getCell(5).setCellStyle(darkBlueSummary);
+		sheet.getRow(0).getCell(6).setCellValue("377");
+		sheet.getRow(0).getCell(6).setCellStyle(darkBlueSummary);
+		
+		sheet.getRow(1).getCell(5).setCellValue("Tasks Completed:");
+		sheet.getRow(1).getCell(5).setCellStyle(darkBlueSummary);
+		sheet.getRow(1).getCell(6).setCellValue("0");
+		sheet.getRow(1).getCell(6).setCellStyle(darkBlueSummary);
+		
+		sheet.getRow(2).getCell(5).setCellValue("Percent Complete:");
+		sheet.getRow(2).getCell(5).setCellStyle(darkBlueSummary);
+		sheet.getRow(2).getCell(6).setCellValue("0%");
+		sheet.getRow(2).getCell(6).setCellStyle(darkBlueSummary);
+		
+		/*
+		 * 
+		 * Yellow Complete Summary
+		 * 
+		 */
+		XSSFCellStyle yellowCompleteSummary = workbook.createCellStyle();
+		yellowCompleteSummary.setFillForegroundColor(new XSSFColor(new java.awt.Color(255,255,0)));
+		yellowCompleteSummary.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		
+		sheet.getRow(3).getCell(4).setCellValue("377");
+		sheet.getRow(3).getCell(4).setCellStyle(yellowCompleteSummary);
+		sheet.getRow(3).getCell(5).setCellValue("Total Tasks to Report");
+		sheet.getRow(3).getCell(5).setCellStyle(yellowCompleteSummary);
+		
+		sheet.getRow(4).getCell(4).setCellValue("0");
+		sheet.getRow(4).getCell(4).setCellStyle(yellowCompleteSummary);
+		sheet.getRow(4).getCell(5).setCellValue("# Done");
+		sheet.getRow(4).getCell(5).setCellStyle(yellowCompleteSummary);
+		
+		sheet.getRow(5).getCell(4).setCellValue("377");
+		sheet.getRow(5).getCell(4).setCellStyle(yellowCompleteSummary);
+		sheet.getRow(5).getCell(5).setCellValue("# Not Started");
+		sheet.getRow(5).getCell(5).setCellStyle(yellowCompleteSummary);
+		
+		sheet.getRow(6).getCell(4).setCellValue("0");
+		sheet.getRow(6).getCell(4).setCellStyle(yellowCompleteSummary);
+		sheet.getRow(6).getCell(5).setCellValue("# In Process");
+		sheet.getRow(6).getCell(5).setCellStyle(yellowCompleteSummary);
+		
+		sheet.getRow(7).getCell(4).setCellValue("288");
+		sheet.getRow(7).getCell(4).setCellStyle(yellowCompleteSummary);
+		sheet.getRow(7).getCell(5).setCellValue("# Not Applicable");
+		sheet.getRow(7).getCell(5).setCellStyle(yellowCompleteSummary);
+		
+		sheet.getRow(8).getCell(4).setCellValue("# Contingency");
+		sheet.getRow(8).getCell(4).setCellStyle(yellowCompleteSummary);
+		sheet.getRow(8).getCell(5).setCellValue("31");
+		sheet.getRow(8).getCell(5).setCellStyle(yellowCompleteSummary);
+		
+		
+		/*
+		 * 
+		 * Empty Block on Right
+		 * 
+		 */
+		XSSFCellStyle emptyBlock = workbook.createCellStyle();
+		emptyBlock.setFillForegroundColor(new XSSFColor(new java.awt.Color(238, 221, 130)));
+		emptyBlock.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		
+		sheet.getRow(0).getCell(7).setCellStyle(emptyBlock);
+		sheet.getRow(0).getCell(8).setCellStyle(emptyBlock);
+		sheet.getRow(0).getCell(9).setCellStyle(emptyBlock);
+		
+		sheet.getRow(1).getCell(7).setCellStyle(emptyBlock);
+		sheet.getRow(1).getCell(8).setCellStyle(emptyBlock);
+		sheet.getRow(1).getCell(9).setCellStyle(emptyBlock);
+		
+		sheet.getRow(2).getCell(7).setCellStyle(emptyBlock);
+		sheet.getRow(2).getCell(8).setCellStyle(emptyBlock);
+		sheet.getRow(2).getCell(9).setCellStyle(emptyBlock);
+
+		sheet.getRow(3).getCell(7).setCellStyle(emptyBlock);
+		sheet.getRow(3).getCell(8).setCellStyle(emptyBlock);
+		sheet.getRow(3).getCell(9).setCellStyle(emptyBlock);
+		
+		sheet.getRow(4).getCell(7).setCellStyle(emptyBlock);
+		sheet.getRow(4).getCell(8).setCellStyle(emptyBlock);
+		sheet.getRow(4).getCell(9).setCellStyle(emptyBlock);
+		
+		sheet.getRow(5).getCell(7).setCellStyle(emptyBlock);
+		sheet.getRow(5).getCell(8).setCellStyle(emptyBlock);
+		sheet.getRow(5).getCell(9).setCellStyle(emptyBlock);
+		
+		sheet.getRow(6).getCell(7).setCellStyle(emptyBlock);
+		sheet.getRow(6).getCell(8).setCellStyle(emptyBlock);
+		sheet.getRow(6).getCell(9).setCellStyle(emptyBlock);
+		
+		sheet.getRow(7).getCell(7).setCellStyle(emptyBlock);
+		sheet.getRow(7).getCell(8).setCellStyle(emptyBlock);
+		sheet.getRow(7).getCell(9).setCellStyle(emptyBlock);
+		
+		sheet.getRow(8).getCell(7).setCellStyle(emptyBlock);
+		sheet.getRow(8).getCell(8).setCellStyle(emptyBlock);
+		sheet.getRow(8).getCell(9).setCellStyle(emptyBlock);
+		
+		/*
+		 * Single Bar
+		 */
+		XSSFCellStyle singleBar = workbook.createCellStyle();
+		singleBar.setFillForegroundColor(new XSSFColor(new java.awt.Color(238, 232, 170)));
+		singleBar.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		
+		for(int i = 0; i < 10; i++)
+			sheet.getRow(9).getCell(i).setCellStyle(singleBar);
+		
+		
+		/*
+		 * 
+		 * Blue Column bar 
+		 * 
+		 */
+		sheet.createRow(10);
+		for(int i = 0; i <= 10; i++)
+			sheet.getRow(10).createCell(i);
+		sheet.getRow(10).getCell(0).setCellValue("Task #");
+		sheet.getRow(10).getCell(0).setCellStyle(blueDescStyle);
+		sheet.getRow(10).getCell(1).setCellValue("Dependency");
+		sheet.getRow(10).getCell(1).setCellStyle(blueDescStyle);
+		sheet.getRow(10).getCell(2).setCellValue("Status");
+		sheet.getRow(10).getCell(2).setCellStyle(blueDescStyle);
+		sheet.getRow(10).getCell(3).setCellValue("Task Description");
+		sheet.getRow(10).getCell(3).setCellStyle(blueDescStyle);
+		sheet.getRow(10).getCell(4).setCellValue("Est Duration");
+		sheet.getRow(10).getCell(4).setCellStyle(blueDescStyle);
+		sheet.getRow(10).getCell(5).setCellValue("Resource");
+		sheet.getRow(10).getCell(5).setCellStyle(blueDescStyle);
+		sheet.getRow(10).getCell(6).setCellValue("Plan Start Time");
+		sheet.getRow(10).getCell(6).setCellStyle(blueDescStyle);
+		sheet.getRow(10).getCell(7).setCellValue("Plan End Time");
+		sheet.getRow(10).getCell(7).setCellStyle(blueDescStyle);
+		sheet.getRow(10).getCell(8).setCellValue("Actual Start Time");
+		sheet.getRow(10).getCell(8).setCellStyle(blueDescStyle);
+		sheet.getRow(10).getCell(9).setCellValue("Actual End Time");
+		sheet.getRow(10).getCell(9).setCellStyle(blueDescStyle);
+		sheet.getRow(10).getCell(10).setCellValue("Team");
+		sheet.getRow(10).getCell(10).setCellStyle(blueDescStyle);
+		
+		
+		workbook.write(new FileOutputStream("runbook.xlsx"));
+		workbook.close();
+		
+	}
