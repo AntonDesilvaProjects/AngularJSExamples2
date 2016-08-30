@@ -1,0 +1,34 @@
+final String username = "gardhiwasam09@gmail.com";
+	        final String password = "desilva5";
+
+	        Properties props = new Properties();
+	        props.put("mail.smtp.auth", "true");
+	        props.put("mail.smtp.starttls.enable", "true");
+	        props.put("mail.smtp.host", "smtp.gmail.com");
+	        props.put("mail.smtp.port", "587");
+	   
+
+	        Session session = Session.getInstance(props,
+	          new javax.mail.Authenticator() {
+	            protected PasswordAuthentication getPasswordAuthentication() {
+	                return new PasswordAuthentication(username, password);
+	            }
+	          });
+
+	        try {
+
+	            Message message = new MimeMessage(session);
+	            message.setFrom(new InternetAddress("gardhiwasam09@gmail.com"));
+	            message.setRecipients(Message.RecipientType.TO,
+	                InternetAddress.parse("gardhiwasam@yahoo.com"));
+	            message.setSubject("Test");
+	            message.setText("HI");
+
+	            session.getTransport("smtps").send(message);
+	           // Transport.send(message);
+
+	            System.out.println("Done");
+
+	        } catch (MessagingException e) {
+	            throw new RuntimeException(e);
+	        }
