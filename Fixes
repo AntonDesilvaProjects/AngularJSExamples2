@@ -1,0 +1,105 @@
+/**
+ * This class is the main view for the application. It is specified in app.js as the
+ * "autoCreateViewport" property. That setting automatically applies the "viewport"
+ * plugin to promote that instance of this class to the body element.
+ *
+ * TODO - Replace this content of this view to suite the needs of your application.
+ */
+Ext.define('Sanbox3.view.main.Main', {
+    extend: 'Ext.container.Container',
+    requires: [
+        'Sanbox3.view.main.MainController',
+        'Sanbox3.view.main.MainModel'
+    ],
+
+    xtype: 'app-main',
+    
+    controller: 'main',
+    viewModel: {
+        type: 'main'
+    },
+
+    layout: {
+        type: 'vbox'
+    },
+
+    items: [
+		{
+			xtype : 'combo',
+			fieldLabel : 'Plase Choose',
+			store : 'Sandbox3.store.NameValue',
+			displayField : 'name',
+			valueField : 'value',
+			multiSelect : true,
+			delimiter : ';',
+			//queryMode : 'local',
+			listeners : {
+				beforerender : function()
+				{
+					console.log('before rendering the combo box !');
+				},
+				afterrender : function()
+				{
+					console.log('after rendering the combo box !');
+				},
+				beforeselect : function( combobox, record, index, options )
+				{
+					console.log('before select');
+					console.log(record);
+					console.log(index);
+					console.log(options);
+					if( record.get('name') == 'Any' )
+					{
+						console.log('Any Selected !');
+						combobox.clearValue();
+						//combobox.setValue('Any');
+						console.log('Inside: ' + combobox.getValue());
+					}
+				},
+				select : function( combobox, records , index, options )
+				{
+					if(records.length == 1 && records[0].get('name') == 'Any')
+					{
+						return;
+					}
+					combobox.clearValue();
+					var values = [];
+					records.forEach( function( current) {
+						if( current.get('name') != 'Any' )
+						{
+							values.push( current.get('value'));
+						}
+					});
+					combobox.setValue(values);
+				},
+				change : Ext.bind(function( combo , newValue , oldValue , eOpts, myParam){
+					console.log("Short Weekends: " + myParam.name );
+				} ,
+				this , { 'name' : 'Anton De Silva' }, true)
+				
+			}
+		},
+		{
+			xtype : 'button',
+			text : 'Select',
+			handler : function()
+			{
+				console.log('button clicked !');
+				var combo = this.up().down('combo');
+				/*var apiResult = '2,5,1';
+				var comboStore = combo.getStore();
+				var apiResultSplit = apiResult.split(',');//.map(Number);
+				for(var i = 0; i < apiResultSplit.length; i++)
+				{
+					apiResultSplit[i] = parseInt(apiResultSplit[i], 10);
+				}
+				//combo.setValue(apiResultSplit);
+				//combo.setValue('New York');
+				console.log(combo.getValue());*/
+				//var s = Ext.create('Sandbox3.store.NameValue');
+				//s.load();
+				combo.setValue('Anton');
+			}
+		}
+	]
+});
