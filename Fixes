@@ -103,3 +103,50 @@ Ext.define('Sanbox3.view.main.Main', {
 		}
 	]
 });
+--------------------------
+// The data store containing the list of states
+var states = Ext.create('Ext.data.Store', {
+    fields: ['abbr', 'name'],
+    data : [
+        {"abbr":"1", "name":"Alabama"},
+        {"abbr":"2", "name":"Alaska"},
+        {"abbr":"3", "name":"Arizona"}
+        //...
+    ]
+});
+
+// Create the combo box, attached to the states data store
+var combo = Ext.create('Ext.form.ComboBox', {
+    fieldLabel: 'Choose State',
+    store: states,
+    queryMode: 'local',
+    displayField: 'name',
+    valueField: 'abbr',
+    multiSelect: true,
+    renderTo: Ext.getBody()
+});
+
+var button = Ext.create('Ext.button.Button', {
+    text : 'Click',
+    renderTo: Ext.getBody(),
+    me : this,
+    handler : function()
+    {
+        console.log(combo.getValue());
+        var resCodes = "3,2";
+        var arr = resCodes.split(',');
+        if(isEqual(arr, combo.getValue())) alert('equal!');
+        else alert('not equal!');
+    },
+        
+});
+
+var isEqual = function(arr1, arr2)
+{
+    if(arr1.length != arr2.length) return false;
+    arr1.sort();
+    arr2.sort();
+    for(var k = 0; k < arr1.length; k++)
+        if(arr1[k] != arr2[k]) return false;
+    return true;
+}
