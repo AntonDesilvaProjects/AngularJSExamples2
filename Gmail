@@ -1,5 +1,5 @@
-final String username = "gardhiwasam09@gmail.com";
-	        final String password = "desilva5";
+final String username = "pass";
+	        final String password = "pass";
 
 	        Properties props = new Properties();
 	        props.put("mail.smtp.auth", "true");
