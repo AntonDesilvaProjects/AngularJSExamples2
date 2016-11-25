@@ -150,3 +150,154 @@ var isEqual = function(arr1, arr2)
         if(arr1[k] != arr2[k]) return false;
     return true;
 }
+--------------------------------------------------JSON Parser----------------------------------------------------
+import java.util.Stack;
+
+
+public class Runner {
+	public static void log(String c)
+	{
+		System.out.println(c);
+	}
+	public static void log(Integer c)
+	{
+		System.out.println(c);
+	}
+	public static void log(Boolean c)
+	{
+		System.out.println(c);
+	}
+	public static void log(String[] c)
+	{
+		for(String x : c)
+		System.out.println(x);
+	}
+	public static void log(Node c, String tab)
+	{
+		 System.out.println(tab + "Name: " + c.name);
+		 System.out.println(tab + "Value: " + c.value);
+		 System.out.println(tab + "Children: " );
+		 
+		 for(Node n : c.children)
+		 {
+			log(n, tab + "\t");
+		 }
+		 System.out.println();
+	}
+	public static void main(String[] args)
+	{
+		Node root = new Node();
+		root.name = "ROOT";
+		
+		
+		String json = "{" + 
+				"\"name\": \"Avengers\"," +
+				"\"year\": 2012," + 
+				"\"actors\": [" + 
+					"\"RDJr\"," + 
+					"\"CH\"," +
+					"\"SJ\"," +
+					"\"SLJ\"" +
+				"]," + 
+				"\"related\": {" + 
+					"\"name\": \"MCU\"," + 
+					"\"films\":[" + 
+						"\"IronMan\"," +
+						"\"Thor\"," + 
+						"\"Captain America\"" +
+					"]" + 
+				"}" +
+			"}";
+		
+		String json2 = "[" +
+							"\"Anton\"," +
+							"\"Desilva\"," +
+						"]";
+		parse(json2, root);
+		
+		log(root, "");
+	
+		
+	}
+	public static void parse(String json, Node root)
+	{
+		String rawContent = json.trim().substring(1, json.trim().length()-1);
+		String[] content = selectiveRplc(rawContent).split(",");
+		
+		String name = null, value = null;
+		String[] pair;
+		
+		for(String s : content)
+		{
+			if(s.indexOf(':') == -1)
+			{
+				pair = s.split(",");
+				for(String x : pair)
+				{
+					root.children.add(new Node(x, ""));
+				}
+				continue;
+			}
+			pair = s.split(":");
+			name = pair[0];
+			value = pair[1];
+			Node current = new Node();
+			current.name = name;
+
+			if(hasValue(value))
+			{
+				current.value = value;
+				root.children.add(current);
+			}
+			else
+			{
+				root.children.add(current);
+				parse( selectiveDerplc(value), current );
+			}
+		}
+	}
+	
+	public static boolean hasValue(String s)
+	{
+		if(s == null)
+			return false;
+		if(s.trim().charAt(0) == '[' || s.trim().charAt(0) == '{' )
+		{
+			return false;
+		}
+		return true;
+	}
+	public static String selectiveRplc(String jsonContent)
+	{
+		boolean rplc = false;
+		int count  = 0;
+		StringBuilder sb = new StringBuilder();
+		
+		for(int i = 0; i < jsonContent.length(); i++)
+		{
+			if(jsonContent.charAt(i) == '{' || jsonContent.charAt(i) == '[' )
+			{
+				count++;
+				rplc = true;
+			}
+			else if(jsonContent.charAt(i) == '}' || jsonContent.charAt(i) == ']' )
+			{
+				count--;
+				if(count == 0)
+					rplc = false;
+			}
+			
+			if( rplc && jsonContent.charAt(i) == ',')
+				sb.append("`");
+			else if( rplc && jsonContent.charAt(i) == ':')
+				sb.append("|");
+			else
+				sb.append(jsonContent.charAt(i));
+		}
+		return sb.toString();
+	}
+	public static String selectiveDerplc(String jsonContent)
+	{
+		return jsonContent.replace('`', ',').replace('|', ':');
+	}
+}
